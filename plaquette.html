@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plaquette d'accueil — Jeux de Rôle Grandeur Nature (GN) &amp; FédéGN</title>
+  <style>
+    /* ==========================================================================
+       CONFIGURATION D'IMPRESSION A4 & POLICES
+       ========================================================================== */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    :root {
+      --vert-foret: #1b3b2b;
+      --vert-moyen: #2d5a43;
+      --vert-clair: #eef4f0;
+      --or-patrimoine: #b48327;
+      --or-clair: #fdf8ee;
+      --bleu-instit: #1b4965;
+      --bleu-clair: #eef5f9;
+      --texte-principal: #222629;
+      --texte-secondaire: #525860;
+      --bordure: #dce2e6;
+      --fond-carte: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", "Liberation Sans", "Helvetica Neue", Arial, sans-serif;
+      color: var(--texte-principal);
+      background: #e5e7eb;
+      font-size: 9.5pt;
+      line-height: 1.45;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Conteneur de page A4 exacte */
+    .page {
+      width: 210mm;
+      height: 297mm;
+      background: #ffffff;
+      margin: 0 auto;
+      padding: 13mm 15mm 12mm 15mm;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-after: always;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    @media screen {
+      .page {
+        margin: 12mm auto;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+      }
+    }
+
+    /* ==========================================================================
+       TYPOGRAPHIE & ELEMENTS COMMUNS
+       ========================================================================== */
+    h1, h2, h3 {
+      font-family: "Georgia", "Liberation Serif", "Times New Roman", serif;
+      color: var(--vert-foret);
+      line-height: 1.2;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      color: var(--or-patrimoine);
+      margin-bottom: 3px;
+    }
+
+    h2 {
+      font-size: 14pt;
+      margin-bottom: 6px;
+      padding-bottom: 4px;
+      border-bottom: 1.5px solid var(--bordure);
+    }
+
+    h3 {
+      font-size: 10.5pt;
+      margin-bottom: 3px;
+    }
+
+    p {
+      margin-bottom: 6px;
+    }
+
+    .muted {
+      color: var(--texte-secondaire);
+    }
+
+    /* ==========================================================================
+       PAGE 1 : COUVERTURE & PRESENTATION DU GN
+       ========================================================================== */
+    .hero {
+      background: linear-gradient(135deg, var(--vert-foret) 0%, #264f3b 100%);
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 16px 20px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 4px solid var(--or-patrimoine);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: #f9e6b3;
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 {
+      color: #ffffff;
+      font-size: 19pt;
+      margin-bottom: 6px;
+      letter-spacing: -0.2px;
+    }
+
+    .hero p {
+      color: #e6efe9;
+      font-size: 9.8pt;
+      margin-bottom: 10px;
+      max-width: 92%;
+    }
+
+    .hero-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 4px 9px;
+      border-radius: 4px;
+      font-size: 8pt;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .pill svg {
+      width: 12px;
+      height: 12px;
+      stroke: #f3cd74;
+      flex-shrink: 0;
+    }
+
+    /* Intro 2 colonnes */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .card {
+      background: var(--fond-carte);
+      border: 1px solid var(--bordure);
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+
+    .card-soft {
+      background: var(--vert-clair);
+      border: 1px solid #cfe0d5;
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+
+    .card-gold {
+      background: var(--or-clair);
+      border: 1px solid #ead8ae;
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+
+    .icon-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 5px;
+    }
+
+    .icon-box {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+      background: var(--vert-foret);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .icon-box svg {
+      width: 14px;
+      height: 14px;
+      stroke: #ffffff;
+    }
+
+    .icon-box.gold {
+      background: var(--or-patrimoine);
+    }
+
+    .icon-box.blue {
+      background: var(--bleu-instit);
+    }
+
+    .analogy-quote {
+      border-left: 3px solid var(--or-patrimoine);
+      padding-left: 10px;
+      font-style: italic;
+      color: var(--vert-foret);
+      font-size: 9.2pt;
+      margin: 6px 0 0 0;
+    }
+
+    ul.clean-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul.clean-list li {
+      position: relative;
+      padding-left: 14px;
+      margin-bottom: 4px;
+      font-size: 8.8pt;
+    }
+
+    ul.clean-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--or-patrimoine);
+      font-weight: bold;
+    }
+
+    /* Engagements 4 cartes */
+    .engagements-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .engagement-item {
+      border: 1px solid var(--bordure);
+      border-left: 3.5px solid var(--vert-moyen);
+      border-radius: 5px;
+      padding: 8px 10px;
+      background: #fcfdfc;
+    }
+
+    .engagement-item h3 {
+      font-size: 9.8pt;
+      color: var(--vert-foret);
+      margin-bottom: 2px;
+    }
+
+    .engagement-item p {
+      font-size: 8.5pt;
+      color: var(--texte-secondaire);
+      margin: 0;
+    }
+
+    /* ==========================================================================
+       PAGE 2 : FEDEGN, ASSURANCE MAIF, FAQ & CONTACT
+       ========================================================================== */
+    .header-p2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--bleu-instit);
+      padding-bottom: 7px;
+    }
+
+    .header-p2 h2 {
+      border: none;
+      margin: 0;
+      padding: 0;
+      color: var(--bleu-instit);
+      font-size: 14.5pt;
+    }
+
+    .fedegn-tag {
+      background: var(--bleu-instit);
+      color: #ffffff;
+      font-size: 8pt;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.4px;
+    }
+
+    .assurance-banner {
+      background: var(--bleu-clair);
+      border: 1.5px solid #b8d2e3;
+      border-radius: 7px;
+      padding: 11px 14px;
+    }
+
+    .assurance-banner h3 {
+      color: var(--bleu-instit);
+      font-size: 11pt;
+      margin-bottom: 4px;
+    }
+
+    .coverage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .coverage-card {
+      background: #ffffff;
+      border: 1px solid #c9dce9;
+      border-radius: 5px;
+      padding: 8px 9px;
+    }
+
+    .coverage-card .role {
+      font-weight: 700;
+      font-size: 8.8pt;
+      color: var(--bleu-instit);
+      margin-bottom: 3px;
+      display: block;
+    }
+
+    .coverage-card .garantie {
+      display: inline-block;
+      background: var(--bleu-instit);
+      color: #ffffff;
+      font-size: 7.2pt;
+      font-weight: 700;
+      padding: 1.5px 6px;
+      border-radius: 3px;
+      margin-bottom: 4px;
+    }
+
+    .coverage-card p {
+      font-size: 8pt;
+      color: var(--texte-secondaire);
+      margin: 0;
+      line-height: 1.35;
+    }
+
+    .step-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .step-box {
+      background: #f8fafb;
+      border: 1px solid var(--bordure);
+      border-radius: 5px;
+      padding: 8px 9px;
+      text-align: left;
+    }
+
+    .step-num {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      text-align: center;
+      border-radius: 50%;
+      background: var(--or-patrimoine);
+      color: #ffffff;
+      font-size: 8pt;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .step-box h4 {
+      font-size: 8.6pt;
+      color: var(--vert-foret);
+      margin-bottom: 2px;
+    }
+
+    .step-box p {
+      font-size: 7.9pt;
+      color: var(--texte-secondaire);
+      margin: 0;
+      line-height: 1.35;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .faq-item {
+      background: #ffffff;
+      border: 1px solid var(--bordure);
+      border-radius: 5px;
+      padding: 7px 10px;
+    }
+
+    .faq-item strong {
+      display: block;
+      font-size: 8.7pt;
+      color: var(--vert-foret);
+      margin-bottom: 2px;
+    }
+
+    .faq-item p {
+      font-size: 8pt;
+      color: var(--texte-secondaire);
+      margin: 0;
+      line-height: 1.35;
+    }
+
+    /* Encart Contact Personnalisable */
+    .contact-box {
+      background: linear-gradient(to right, var(--vert-foret), #264f3b);
+      color: #ffffff;
+      border-radius: 7px;
+      padding: 11px 14px;
+      display: grid;
+      grid-template-columns: 1.1fr 1.4fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .contact-box h3 {
+      color: #f9e6b3;
+      font-size: 11pt;
+      margin-bottom: 3px;
+    }
+
+    .contact-box p {
+      color: #e2ece6;
+      font-size: 8.2pt;
+      margin: 0;
+    }
+
+    .contact-fields {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 5px;
+      padding: 7px 10px;
+      font-size: 8.3pt;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px 10px;
+    }
+
+    .contact-field span {
+      color: #f3cd74;
+      font-weight: 600;
+      display: block;
+      font-size: 7.3pt;
+      text-transform: uppercase;
+    }
+
+    .footer-note {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 7.5pt;
+      color: var(--texte-secondaire);
+      border-top: 1px solid var(--bordure);
+      padding-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       PAGE 1 : PRÉSENTATION DES ACTIVITÉS & ENGAGEMENTS ENVERS L'HÔTE
+       ======================================================================== -->
+  <section class="page">
+
+    <!-- Bandeau d'en-tête -->
+    <header class="hero">
+      <div class="hero-badge">Dossier d'information</div>
+      <h1>Qu'est-ce qu'un Jeu de Rôle Grandeur Nature (GN) : activités et cadres</h1>
+      <p>
+        Une activité culturelle, théâtrale et de plein air encadrée par des associations structurées,
+        respectueuse de votre patrimoine et couverte par une assurance nationale.
+      </p>
+      <div class="hero-pills">
+        <span class="pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Assurance nationale FédéGN / MAIF
+        </span>
+        <span class="pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Charte « Zéro Trace » &amp; Sécurité
+        </span>
+        <span class="pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+          Agréé Jeunesse &amp; Éducation Populaire
+        </span>
+      </div>
+    </header>
+
+    <!-- Section 1 : Qu'est-ce que le GN ? -->
+    <div>
+      <span class="section-label">1. Découvrir l'activité</span>
+      <h2>Qu'est-ce que le Jeu de Rôle Grandeur Nature (GN) ?</h2>
+      <div class="grid-2">
+        <div class="card-soft">
+          <div class="icon-title">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3>Un théâtre immersif et participatif</h3>
+          </div>
+          <p style="font-size: 8.8pt; margin-bottom: 4px;">
+            Le GN est une forme de spectacle vivant sans public : les participants incarnent physiquement un personnage
+            dans un scénario écrit à l'avance (enquête policière, fresque historique, aventure médiévale ou fantastique,
+            science-fiction…).
+          </p>
+          <p class="analogy-quote">
+            « Imaginez le tournage d'un film historique ou d'une pièce de théâtre dont les participants seraient à la fois les acteurs et les spectateurs. »
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="icon-title">
+            <div class="icon-box gold">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+            </div>
+            <h3>Une pratique culturelle &amp; conviviale</h3>
+          </div>
+          <ul class="clean-list">
+            <li><strong>Public responsable :</strong> majoritairement des adultes, passionnés d'histoire, d'artisanat, de costumes et de théâtre d'improvisation.</li>
+            <li><strong>Zéro violence réelle :</strong> les éventuelles scènes d'action sont simulées avec des répliques souples en mousse et latex, contrôlées avant le jeu.</li>
+            <li><strong>Valorisation du lieu :</strong> votre domaine devient le décor naturel d'une histoire respectueuse de son cadre.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2 : Les formats adaptés à vos espaces -->
+    <div>
+      <span class="section-label">2. Des formats modulables selon vos lieux</span>
+      <h2>Quels types d'événements pouvez-vous accueillir ?</h2>
+      <div class="grid-3">
+        <div class="card">
+          <div class="icon-title">
+            <div class="icon-box blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            </div>
+            <h3>Huis-Clos &amp; Murder Party</h3>
+          </div>
+          <p style="font-size: 8.2pt; color: var(--texte-secondaire); margin-bottom: 4px;">
+            <strong>Lieux :</strong> châteaux, gîtes, manoirs, salles de réception, bureaux ou locaux d'entreprise.
+          </p>
+          <p style="font-size: 8.2pt; margin: 0;">
+            10 à 40 personnes sur une soirée ou une journée. Jeu d'enquête et de dialogue uniquement, <strong>sans action physique</strong>.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="icon-title">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            </div>
+            <h3>GN de plein air / Week-end</h3>
+          </div>
+          <p style="font-size: 8.2pt; color: var(--texte-secondaire); margin-bottom: 4px;">
+            <strong>Lieux :</strong> domaines forestiers, parcs privés, terrains agricoles, forts ou campements.
+          </p>
+          <p style="font-size: 8.2pt; margin: 0;">
+            30 à 150+ participants sur 1 à 3 jours. Campements légers en toile, décors amovibles, jeu de rôle et d'aventure en extérieur.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="icon-title">
+            <div class="icon-box gold">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+            </div>
+            <h3>Jeux de piste &amp; Escrime ludique</h3>
+          </div>
+          <p style="font-size: 8.2pt; color: var(--texte-secondaire); margin-bottom: 4px;">
+            <strong>Lieux :</strong> parcs, sentiers, espaces verts communaux ou terrains de loisirs.
+          </p>
+          <p style="font-size: 8.2pt; margin: 0;">
+            Activités diurnes encadrées (jeux de piste scénarisés, Trollball, escrime en mousse, team-building).
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 : Nos 4 engagements envers les propriétaires -->
+    <div>
+      <span class="section-label">3. Sérénité &amp; organisation</span>
+      <h2>Nos engagements concrets envers les propriétaires et sociétés</h2>
+      <div class="engagements-grid">
+        <div class="engagement-item">
+          <h3>1. Respect intégral des lieux (« Zéro Trace »)</h3>
+          <p>
+            Aucun perçage, clouage ou modification durable. Les décors sont 100 % éphémères. Le tri des déchets et le nettoyage complet du site sont assurés par l'équipe organisatrice avant le départ.
+          </p>
+        </div>
+        <div class="engagement-item">
+          <h3>2. Sécurité physique &amp; encadrement</h3>
+          <p>
+            Référents sécurité identifiés sur place, trousse de secours / poste de premiers soins, contrôle strict des accessoires (mousse/latex uniquement) et respect absolu des règles incendie.
+          </p>
+        </div>
+        <div class="engagement-item">
+          <h3>3. Convention écrite &amp; état des lieux</h3>
+          <p>
+            Signature systématique d'une convention de mise à disposition ou d'un contrat de location précisant les zones autorisées, les horaires, les effectifs et l'état des lieux entrant/sortant.
+          </p>
+        </div>
+        <div class="engagement-item">
+          <h3>4. Tranquillité &amp; dialogue de proximité</h3>
+          <p>
+            Information préalable de la mairie et des secours locaux si nécessaire, respect des arrêtés sonores nocturnes et interlocuteur unique joignable 24h/24 pendant toute la durée de l'événement.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pied de page 1 -->
+    <footer class="footer-note">
+      <span>Plaquette d'information — Jeu de Rôle Grandeur Nature</span>
+      <span>Page 1 / 2 — Présentation de l'activité</span>
+    </footer>
+  </section>
+
+
+  <!-- ========================================================================
+       PAGE 2 : LA FÉDÉGN, L'ASSURANCE MAIF, FAQ & CONTACT
+       ======================================================================== -->
+  <section class="page">
+
+    <!-- En-tête Page 2 -->
+    <header class="header-p2">
+      <div>
+        <span class="section-label" style="color: var(--bleu-instit);">Garanties juridiques &amp; assurantielles</span>
+        <h2>Un cadre fédéral national : la FédéGN</h2>
+      </div>
+      <div class="fedegn-tag">www.fedegn.org</div>
+    </header>
+
+    <!-- Présentation FédéGN -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="icon-title">
+          <div class="icon-box blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Qu'est-ce que la FédéGN ?</h3>
+        </div>
+        <p style="font-size: 8.5pt; margin-bottom: 4px;">
+          Fondée en <strong>1994</strong>, la <strong>Fédération Française des Jeux de Rôles Grandeur Nature (FédéGN)</strong>
+          fédère, accompagne et représente les associations et organisateurs de GN partout en France.
+        </p>
+        <p style="font-size: 8.5pt; margin: 0;">
+          Elle est reconnue et <strong>agréée Jeunesse et Éducation Populaire</strong> par l'État, attestant de son utilité sociale,
+          de son fonctionnement démocratique et de son exigence en matière de sécurité et de déontologie.
+        </p>
+      </div>
+
+      <div class="card-gold">
+        <div class="icon-title">
+          <div class="icon-box gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <h3>Pourquoi est-ce un gage de sérieux ?</h3>
+        </div>
+        <ul class="clean-list">
+          <li><strong>Déclaration officielle :</strong> chaque événement assuré est déclaré en amont auprès de la fédération.</li>
+          <li><strong>Règles de sécurité éprouvées :</strong> fiches techniques, chartes de consentement et protocoles de secours.</li>
+          <li><strong>Accompagnement juridique :</strong> modèles de conventions, suivi de sinistres et médiation si besoin.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Focus Assurance MAIF -->
+    <div class="assurance-banner">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+        <h3 style="margin: 0;">Une assurance nationale dédiée, opérée par la MAIF</h3>
+        <span style="font-size: 8pt; font-weight: 700; color: var(--bleu-instit); background: #ffffff; padding: 2px 8px; border-radius: 4px; border: 1px solid #b8d2e3;">
+          Contrat de groupe FédéGN — MAIF
+        </span>
+      </div>
+      <p style="font-size: 8.5pt; margin: 5px 0 0 0;">
+        Depuis le 1<sup>er</sup> janvier 2022, l'ensemble des garanties proposées par la FédéGN est souscrit et géré directement
+        auprès de la <strong>MAIF</strong>. Elles couvrent la pratique, la préparation logistique, les repas, les déplacements liés à l'événement et les activités assimilées (escrime ludique, jeux de piste, etc.).
+      </p>
+
+      <div class="coverage-grid">
+        <div class="coverage-card">
+          <span class="role">L'association organisatrice</span>
+          <span class="garantie">Responsabilité Civile (RC)</span>
+          <p>
+            Toute association membre conventionnée auprès de la FédéGN est couverte en Responsabilité Civile pour l'organisation de l'événement déclaré.
+          </p>
+        </div>
+
+        <div class="coverage-card">
+          <span class="role">Organisateurs, bénévoles &amp; PNJ</span>
+          <span class="garantie">RC + IA + AAP</span>
+          <p>
+            Dirigeants, bénévoles (logistique, cuisine, photo), figurants (PNJ) et secouristes sont couverts en Responsabilité Civile, Individuelle Accident et Assistance/Aide Juridique.
+          </p>
+        </div>
+
+        <div class="coverage-card">
+          <span class="role">Chaque joueur participant</span>
+          <span class="garantie">RC + IA + AAP</span>
+          <p>
+            Chaque participant est couvert individuellement via une formule fédérale obligatoire : <em>Pass 1GN</em> (durée du jeu), <em>Carte GN</em> ou <em>Carte GN+</em> (annuelles).
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Déroulement concret pour le propriétaire -->
+    <div>
+      <span class="section-label">En pratique : comment se déroule l'accueil ?</span>
+      <div class="step-row">
+        <div class="step-box">
+          <span class="step-num">1</span>
+          <h4>Visite &amp; repérage</h4>
+          <p>Rencontre sur place pour définir les zones accessibles, les accès véhicules et vos consignes spécifiques.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">2</span>
+          <h4>Convention &amp; attestation</h4>
+          <p>Signature de la convention de mise à disposition et remise de l'attestation d'assurance FédéGN / MAIF.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">3</span>
+          <h4>Déroulement encadré</h4>
+          <p>Accueil des participants, respect des horaires et des règles de sécurité avec un référent joignable sur site.</p>
+        </div>
+        <div class="step-box">
+          <span class="step-num">4</span>
+          <h4>Remise en état &amp; bilan</h4>
+          <p>Démontage complet, gestion des déchets et état des lieux de sortie contradictoire avant le départ.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Propriétaires -->
+    <div>
+      <span class="section-label">Questions fréquentes des propriétaires</span>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <strong>Ma responsabilité de propriétaire est-elle protégée ?</strong>
+          <p>
+            Oui : les dommages causés par les participants ou l'organisation relèvent de l'assurance FédéGN/MAIF. La convention clarifie les responsabilités (vous conservez votre assurance propriétaire classique pour les défauts structurels du bien lui-même).
+          </p>
+        </div>
+        <div class="faq-item">
+          <strong>Qu'en est-il des nuisances sonores ou des feux ?</strong>
+          <p>
+            Les jeux privilégient l'immersion et le dialogue. Aucun feu ouvert n'est allumé sans votre accord écrit et le respect strict des arrêtés préfectoraux. Les horaires calmes convenus sont respectés.
+          </p>
+        </div>
+        <div class="faq-item">
+          <strong>Y a-t-il des contraintes lourdes pour moi ?</strong>
+          <p>
+            Non : l'association est autonome (logistique, sanitaires mobiles si terrain nu, gestion des repas et des déchets). Votre présence permanente n'est pas requise pendant l'événement.
+          </p>
+        </div>
+        <div class="faq-item">
+          <strong>Quelles contreparties pour l'accueil ?</strong>
+          <p>
+            Selon votre souhait : indemnité de location, participation aux frais d'entretien, valorisation de votre domaine auprès de notre communauté ou simple partenariat associatif.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Encart Contact Personnalisable -->
+    <div class="contact-box">
+      <div>
+        <h3>Votre interlocuteur local</h3>
+        <p>
+          Nous sommes à votre entière disposition pour organiser une visite de votre site,
+          vous présenter notre projet et vous transmettre nos justificatifs (statuts, attestation d'assurance).
+        </p>
+      </div>
+      <div class="contact-fields">
+        <div class="contact-field">
+          <span>Association</span>
+          [Nom de votre association]
+        </div>
+        <div class="contact-field">
+          <span>Référent / Contact</span>
+          [Prénom Nom — Fonction]
+        </div>
+        <div class="contact-field">
+          <span>Téléphone</span>
+          [06 XX XX XX XX]
+        </div>
+        <div class="contact-field">
+          <span>E-mail / Site web</span>
+          [contact@association.fr]
+        </div>
+      </div>
+    </div>
+
+    <!-- Pied de page 2 -->
+    <footer class="footer-note">
+      <span>Sources &amp; informations fédérales : <strong>https://www.fedegn.org/</strong> (FédéGN — Agrément Jeunesse &amp; Éducation Populaire)</span>
+      <span>Page 2 / 2 — Cadre &amp; Assurance</span>
+    </footer>
+  </section>
+
+</body>
+</html>
