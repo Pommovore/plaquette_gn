@@ -1,9 +1,39 @@
 """Script de génération de plaquette PDF à partir d'un template HTML."""
 
 import argparse
+import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
+
+
+def find_chrome_executable() -> str | None:
+    """Trouve l'exécutable Google Chrome (ou Chromium/Edge) sur le système."""
+    for name in ("google-chrome", "chromium", "chromium-browser", "chrome", "msedge"):
+        found = shutil.which(name)
+        if found:
+            return found
+
+    if sys.platform == "win32":
+        env_dirs = [
+            os.environ.get("ProgramFiles"),
+            os.environ.get("ProgramFiles(x86)"),
+            os.environ.get("LocalAppData"),
+        ]
+        rel_paths = (
+            Path("Google/Chrome/Application/chrome.exe"),
+            Path("Microsoft/Edge/Application/msedge.exe"),
+        )
+        for base in env_dirs:
+            if not base:
+                continue
+            for rel in rel_paths:
+                candidate = Path(base) / rel
+                if candidate.is_file():
+                    return str(candidate)
+
+    return None
 
 
 def parse_args() -> argparse.Namespace:
@@ -40,10 +70,18 @@ def build_pdf(html_path: Path, pdf_path: Path, preview: bool = False) -> None:
         print(f"Erreur : fichier introuvable : {html_path}", file=sys.stderr)
         sys.exit(1)
 
+    chrome_bin = find_chrome_executable()
+    if chrome_bin is None:
+        print(
+            "Erreur : Google Chrome (ou Chromium/Edge) est introuvable dans le PATH ou les emplacements standard.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
     pdf_path.parent.mkdir(parents=True, exist_ok=True)
 
     cmd = [
-        "google-chrome",
+        chrome_bin,
         "--headless",
         "--disable-gpu",
         "--no-sandbox",
